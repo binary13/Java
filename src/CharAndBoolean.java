@@ -2,8 +2,6 @@
  * Created by justin on 2/1/2016.
  */
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 
 public class CharAndBoolean {
 
@@ -13,5 +11,9 @@ public class CharAndBoolean {
 
         char regSym = '\u00AE';
         System.out.println("My other char = " + regSym);
+
+        System.out.println(Long.MAX_VALUE);
+
+
     }
 }
