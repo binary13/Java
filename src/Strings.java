@@ -1,6 +1,7 @@
 /**
  * Created by justin on 2/1/2016.
  */
+
 public class Strings {
     public static void main(String args[]){
         String mystring = "This is a string.";
