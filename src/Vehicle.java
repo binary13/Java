@@ -16,7 +16,7 @@ public class Vehicle {
         this.wheels = 4;
         this.doors = 4;
 
-        System.out.println(String.format("New %s created.", (this.getClass().toString().replace("class ", ""))));
+        System.out.println(String.format("New %s created.", this.getClass().getSimpleName()));
         this.getMake();
         this.getModel();
         this.getEngine();
