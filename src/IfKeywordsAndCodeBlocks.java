@@ -10,18 +10,21 @@ public class IfKeywordsAndCodeBlocks {
         int levelCompleted = 5;
         int bonus = 100;
 
-        if(gameOver) {
-            int finalScore = score + (levelCompleted * bonus);
-            System.out.println("Your final score was " + finalScore);
-        }
+        System.out.println(displayScore(gameOver, score, levelCompleted, bonus));
 
         score = 10000;
         levelCompleted = 8;
         bonus = 200;
 
-        if (gameOver) {
+        System.out.println(displayScore(gameOver, score, levelCompleted, bonus));
+    }
+
+    public static String displayScore(boolean gameOver, int score, int levelCompleted, int bonus) {
+        if(gameOver) {
             int finalScore = score + (levelCompleted * bonus);
-            System.out.println("Your final score was " + finalScore);
+            finalScore += 2000;
+            return "Your final score was " + finalScore;
         }
+        else return("Error! Game not over!");
     }
 }
