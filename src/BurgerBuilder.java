@@ -54,7 +54,7 @@ class InputGetter {
         int i = 0;
         String input = this.br.readLine();
         try {
-            patties = Integer.parseInt(input);
+            i = Integer.parseInt(input);
         } catch (NumberFormatException nfe) {
             System.err.println("Invalid input!");
             return -1;
