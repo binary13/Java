@@ -1,10 +1,12 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by justin on 2/16/2016.
  */
-public class Player implements ISaveable {
+public class Player implements ISavable {
 
     private String name;
     private int health;
@@ -60,23 +62,22 @@ public class Player implements ISaveable {
 
     @Override
     public String toString() {
-        return "Player{" +
-                "name='" + name + '\'' +
-                ", health=" + health +
-                ", strength=" + strength +
-                ", weapon='" + weapon + '\'' +
-                '}';
+        return name + ":\n" +
+                "\t health: " + health +
+                "\t strength: " + strength +
+                "\t weapon: " + weapon;
     }
 
 
     @Override
-    public List<String> write() {
-        List<String> values = new ArrayList<String>();
-        values.add(0, this.name);
-        values.add(1, "" + this.health);
-        values.add(2, "" + this.strength);
-        values.add(3, "" + this.weapon);
-        return values;
+    public void write() {
+        try {
+            FileWriter writer = new FileWriter("players.txt");
+            writer.write(name + "," + health + "," + strength + "," + weapon + "\n");
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
