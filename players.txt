@@ -1,0 +1,3 @@
+Justin,100,50,Sword
+Fred,12,2,Noodle
+Keili,100,50,Bow

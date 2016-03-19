@@ -1,0 +1,2 @@
+Slavering Frog,1200,34
+Quivering Beetle,20,2
