@@ -62,32 +62,36 @@ public class Player implements ISavable {
 
     @Override
     public String toString() {
-        return name + ":\n" +
-                "\t health: " + health +
-                "\t strength: " + strength +
-                "\t weapon: " + weapon;
+        return name + ":" +
+                "\n\t health: " + health +
+                "\n\t strength: " + strength +
+                "\n\t weapon: " + weapon;
     }
 
 
     @Override
-    public void write() {
-        try {
-            FileWriter writer = new FileWriter("players.txt");
-            writer.write(name + "," + health + "," + strength + "," + weapon + "\n");
-        }
-        catch(IOException ex) {
-            ex.printStackTrace();
-        }
+    public String write() {
+
+        return (name + "," + health + "," + strength + "," + weapon);
+
     }
 
     @Override
-    public void read(List<String> savedValues) {
+    public void read(String input) {
+        List<String> savedValues = new ArrayList<>();
+        String[] splitString = input.split(",");
+
+        for(String sString : splitString) {
+            savedValues.add(sString);
+        }
+
         if(savedValues != null && savedValues.size()>0) {
             this.name = savedValues.get(0);
             this.health = Integer.parseInt(savedValues.get(1));
             this.strength = Integer.parseInt(savedValues.get(2));
             this.weapon = savedValues.get(3);
         }
+        else System.out.println("Failed to load values. File may be empty or nonexistent.");
     }
 
     public void loseHealth(int damage) {

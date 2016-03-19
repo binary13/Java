@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,27 +37,35 @@ public class Monster implements ISavable {
 
     @Override
     public String toString() {
-        return name + ":\n" +
-                "\t health: " + health +
-                "\t strength: " + strength;
+        return name + ":" +
+                "\n\t health: " + health +
+                "\n\t strength: " + strength;
     }
 
     @Override
-    public List<String> write() {
-        List<String> values = new ArrayList<String>();
-        values.add(0, this.name);
-        values.add(1, "" + this.health);
-        values.add(2, "" + this.strength);
-        return values;
+    public String write() {
+        return (name + "," + health + "," + strength);
     }
 
     @Override
-    public void read(List<String> savedValues) {
+    public void read(String input) {
+        List<String> savedValues = new ArrayList<>();
+        String[] splitString = input.split(",");
+
+        savedValues.addAll(Arrays.asList(splitString));
+
+        /*
+        for(String sString : splitString) {
+            savedValues.add(sString);
+        }
+        */
+
         if(savedValues != null && savedValues.size()>0) {
             this.name = savedValues.get(0);
             this.health = Integer.parseInt(savedValues.get(1));
             this.strength = Integer.parseInt(savedValues.get(2));
         }
+        else System.out.println("Failed to load values. File may be empty or nonexistent.");
     }
 
 }

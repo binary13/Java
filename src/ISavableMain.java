@@ -1,4 +1,6 @@
+import java.io.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,14 +26,20 @@ public class ISavableMain {
             System.out.println("Please make a selection: \n" +
                     "1. Create a Player \n" +
                     "2. Create a Monster \n" +
-                    "3. Print players \n" +
-                    "4. Print monsters \n" +
-                    "5. Save characters to disk \n" +
-                    "6. Load characters from disk \n" +
+                    "3. Print characters \n" +
+                    "4. Save characters to disk \n" +
+                    "5. Load characters from disk \n" +
                     "0. Quit");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice;
+            String line = scanner.nextLine();
+            try {
+                choice = Integer.parseInt(line);
+            }
+            catch(NumberFormatException|InputMismatchException ex){
+                choice = 0;
+            }
+
 
             switch (choice) {
                 case 1:
@@ -61,21 +69,24 @@ public class ISavableMain {
                     for(Player player : players) {
                         System.out.println(player.toString());
                     }
-                    continue;
-                case 4:
+
+                    System.out.println("");
+
                     System.out.println("Monsters: ");
                     for(Monster monster : monsters) {
-                        System.out.println(monsters.toString());
+                        System.out.println(monster.toString());
                     }
                     continue;
-                case 5:
+                case 4:
                     saveObjects(players, monsters);
                     continue;
-                case 6:
+                case 5:
                     players = loadPlayers();
                     monsters = loadMonsters();
+                    continue;
                 case 0:
                     quit = true;
+                    continue;
                 default:
                     System.out.println("Invalid input!");
             }
@@ -83,12 +94,30 @@ public class ISavableMain {
     }
 
     public static void saveObjects(List<Player> players, List<Monster> monsters) {
-        for(Player player : players) {
-            player.write();
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("players.txt"));
+
+            for(Player player : players) {
+                writer.write(player.write());
+                writer.newLine();
+            }
+            writer.close();
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
         }
 
-        for(Monster monster : monsters) {
-            monster.write();
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("monsters.txt"));
+            for(Monster monster : monsters) {
+                writer.write(monster.write());
+                writer.newLine();
+            }
+            writer.close();
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -96,7 +125,35 @@ public class ISavableMain {
         List<Player> players = new ArrayList<>();
 
         try {
-
+            BufferedReader reader = new BufferedReader(new FileReader("players.txt"));
+            String line = "";
+            while((line = reader.readLine()) != null) {
+                Player player = new Player();
+                player.read(line);
+                players.add(player);
+            }
         }
+        catch(IOException ex) {
+            ex.printStackTrace();
+        }
+        return players;
+    }
+
+    public static List<Monster> loadMonsters() {
+        List<Monster> monsters = new ArrayList<>();
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("monsters.txt"));
+            String line = "";
+            while((line = reader.readLine()) != null) {
+                Monster monster = new Monster();
+                monster.read(line);
+                monsters.add(monster);
+            }
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
+        }
+        return monsters;
     }
 }
