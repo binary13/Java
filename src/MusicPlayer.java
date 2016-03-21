@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by justin on 3/19/2016.
@@ -18,11 +18,13 @@ public class MusicPlayer {
         plist.addAlbum(album);
 
         album = new Album("Death and Puppies", "Condescending Irony");
-        album.addSong("The Ironic Twist of Poetic Justice, Part III", 10.23);
+        album.addSong("The Ironic Twists of Poetic Justice, Part III", 10.23);
         album.addSong("I don't like you at all", 4.17);
         album.addSong("A Hipster Anthem", 4.44);
         album.addSong("Nobody's Doing It", 3.45);
         plist.addAlbum(album);
+
+        plist.showSongs();
 
         plist.play();
 
@@ -38,10 +40,92 @@ public class MusicPlayer {
 
 
     static class Playlist {
-        private LinkedList<Song> songs;
+        private LinkedList<Song> songs = new LinkedList<>();
+
 
         public Playlist() {
         }
+
+        public void play() {
+            Scanner scanner = new Scanner(System.in);
+            boolean quit = false;
+            boolean forward = true;
+            ListIterator<Song> iter = this.songs.listIterator();
+
+            if(songs.size() == 0) {
+                System.out.println("Playlist is empty.");
+            } else {
+                System.out.println("Now playing " + iter.next().print());
+
+                while(!quit) {
+                    System.out.println("Menu: ");
+                    System.out.println("\t 1. Play the next song");
+                    System.out.println("\t 2. Play the previous song");
+                    System.out.println("\t 3. Play from the beginning");
+                    System.out.println("\t 4. Remove current song from playlist");
+                    System.out.println("\t 5. Print playlist");
+                    System.out.println("\t 0. Exit");
+
+                    int choice;
+                    String line = scanner.nextLine();
+                    try {
+                        choice = Integer.parseInt(line);
+                    }
+                    catch(NumberFormatException|InputMismatchException ex){
+                        choice = 0;
+                    }
+
+                    switch(choice) {
+                        case 1:
+                            if(iter.hasNext()){
+                                if(!forward) {
+                                    iter.next();
+                                    forward = true;
+                                }
+                                System.out.println("Now playing " + iter.next().print());
+
+                            }
+                            else {
+                                System.out.println("End of playlist.");
+                            }
+                            break;
+                        case 2:
+                            if(iter.hasPrevious()) {
+                                if(forward) {
+                                    iter.previous();
+                                    forward = false;
+                                }
+                                System.out.println("Now playing " + iter.previous().print());
+                            }
+                            else {
+                                System.out.println("Start of playlist.");
+                            }
+                            break;
+                        case 3:
+                            iter = this.songs.listIterator(0);
+                            forward = true;
+                            System.out.println("Now playing " + iter.next().print());
+                            break;
+                        case 4:
+                            System.out.println("Song removed.");
+                            iter.remove();
+                            break;
+                        case 5:
+                            this.showSongs();
+                            break;
+                        case 0:
+                            quit = true;
+                            break;
+                        default:
+                            quit = true;
+                    }
+                }
+            }
+        }
+
+        public void playNext() {}
+
+        public void playPrev() {}
 
         public void addSong(Song song) {
             this.songs.add(song);
@@ -55,7 +139,7 @@ public class MusicPlayer {
 
         public void showSongs() {
             for(int i = 0; i < this.songs.size(); i++) {
-                System.out.println((i+1) + ". " + this.songs.get(i).getTitle() + " by " + this.songs.get(i).getArtist());
+                System.out.println((i+1) + ". " + this.songs.get(i).print());
             }
         }
     }
@@ -63,7 +147,7 @@ public class MusicPlayer {
     static class Album {
         private String title;
         private String artist;
-        private ArrayList<Song> songs;
+        private ArrayList<Song> songs = new ArrayList<>();
 
         public Album(String title, String artist) {
             this.title = title;
@@ -100,6 +184,10 @@ public class MusicPlayer {
 
         public String getArtist() {
             return artist;
+        }
+
+        public String print() {
+            return this.getTitle() + " by " + this.getArtist();
         }
     }
 }
