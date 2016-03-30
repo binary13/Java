@@ -16,33 +16,39 @@ public class MyLinkedList implements NodeList{
     @Override
     public boolean addItem(ListItem newItem) {
         if(this.root == null) {
-            //List was empty - this item becomes head
+            // List was empty - this item becomes root
             this.root = newItem;
             return true;
         }
 
         ListItem currentItem = this.root;
-
         while(currentItem != null) {
             int comparison = (currentItem.compareTo(newItem));
             if(comparison < 0) {
-                //currentItem < newItem, add newItem to the right (greater than direction)
-                currentItem.setNext(newItem);
-                newItem.setPrevious(currentItem);
-                return true;
-            }
-            else if (comparison > 0) {
-                //currentItem > newItem, add newItem to the left (less than direction)
+                // newItem is greater, move right until it currentItem is greater or end of list reached
+                if(currentItem.next() != null) {
+                    // move right, run loop again
+                    currentItem = currentItem.next();
+                } else {
+                    // currentItem is last in list, can't move right
+                    currentItem.setNext(newItem);
+                    newItem.setPrevious(currentItem);
+                    return true;
+                }
+            } else if (comparison > 0) {
+                // currentItem > newItem, add newItem to the left (less than direction)
                 if(currentItem.previous() != null) {
                     currentItem.previous().setNext(newItem);
                     newItem.setPrevious(currentItem.previous());
                     newItem.setNext(currentItem);
                     currentItem.setPrevious(newItem);
                 } else {
+                    // currentItem is first in the list, insert newItem as root
                     newItem.setNext(this.root);
                     this.root.setPrevious(newItem);
                     this.root = newItem;
                 }
+                return true;
             }
             else {
                 // currentItem and newItem are equal
@@ -50,7 +56,7 @@ public class MyLinkedList implements NodeList{
                 return false;
             }
         }
-        return false;
+        return false; // Should never execute
     }
 
     @Override
@@ -69,6 +75,8 @@ public class MyLinkedList implements NodeList{
                 } else {
                     currentItem.previous().setNext(currentItem.next());
                 }
+            } else if(comparison > 0) {
+                //
             }
         }
     }
