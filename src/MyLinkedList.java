@@ -74,13 +74,24 @@ public class MyLinkedList implements NodeList{
                     this.root = currentItem.next();
                 } else {
                     currentItem.previous().setNext(currentItem.next());
-                    currentItem.next().setPrevious(currentItem.previous());
-                    return true;
+                    if(currentItem.next() != null)
+                    {
+                        currentItem.next().setPrevious(currentItem.previous());
+                        return true;
+                    }
                 }
+            } else if(comparison < 0) {
+                // Haven't reached matching item - move to the right
+                currentItem = currentItem.next();
             } else if(comparison > 0) {
-                //
+                // Gone beyond where matching value would be - value not in list
+                System.out.println(itemToRemove.getValue() + " not in list.");
+                return false;
             }
         }
+        // reached end of list with no matching value
+        System.out.println(itemToRemove.getValue() + " not in list.");
+        return false;
     }
 
     @Override
