@@ -16,8 +16,8 @@ public class Main {
 
         System.out.println(adelaideCrows.numPlayers());
 
-        Team<BaseballPlayer> baseballTeam = new Team<>("Chicago Cubs");
-        baseballTeam.addPlayer(pat);
+        Team<BaseballPlayer> chicagoCubs = new Team<>("Chicago Cubs");
+        chicagoCubs.addPlayer(pat);
 
         Team<SoccerPlayer> brokenTeam = new Team<>("SomeSoccerTeam");
         brokenTeam.addPlayer(beckham);
@@ -44,6 +44,17 @@ public class Main {
         System.out.println(hawthorn.getName() + ": " + hawthorn.ranking());
 
         System.out.println(adelaideCrows.compareTo(melbourne));
+
+
+
+        League<Team<FootballPlayer>> afl = new League<>("Australian Football League");
+        afl.addTeam(melbourne);
+        afl.addTeam(hawthorn);
+        afl.addTeam(fremantle);
+        afl.addTeam(adelaideCrows);
+        //afl.addTeam(chicagoCubs);
+
+        afl.printTable();
 
     }
 }
