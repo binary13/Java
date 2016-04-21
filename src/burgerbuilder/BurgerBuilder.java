@@ -1,3 +1,5 @@
+package burgerbuilder;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -77,7 +79,7 @@ class CustomBurgerMenu {
         Burger myBurger = new Burger(bun, patties);
 
         while (true) {
-            System.out.println("Building a Custom Burger!");
+            System.out.println("Building a Custom burgerbuilder.Burger!");
             System.out.println("Your burger currently contains: " + myBurger.showToppings());
             System.out.println("You may add up to four toppings.");
             System.out.println("Choose from the following options.");
@@ -110,12 +112,12 @@ public class BurgerBuilder {
 
         while (true) {
             System.out.println("***************************");
-            System.out.println("Welcome to Burger Builder!");
+            System.out.println("Welcome to burgerbuilder.Burger Builder!");
             System.out.println("***************************");
             System.out.println("Choose from the following options.");
             System.out.println("Would you like to:");
-            System.out.println("1. Build a Custom Burger.");
-            System.out.println("2. Build a Veggie Burger.");
+            System.out.println("1. Build a Custom burgerbuilder.Burger.");
+            System.out.println("2. Build a Veggie burgerbuilder.Burger.");
             System.out.println("3. Build a Deluxe Combo.");
             System.out.println("4. Exit.");
 

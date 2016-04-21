@@ -26,7 +26,7 @@ public class League<T extends Team>
     public void printTable() {
         if(teams != null) {
             System.out.println("---------------------------------------------------");
-            System.out.println("Highest Ranking Teams in League " + this.name);
+            System.out.println("Highest Ranking Teams: " + this.name);
             System.out.println("---------------------------------------------------");
 
             Collections.sort(teams);
