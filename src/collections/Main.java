@@ -9,6 +9,18 @@ public class Main
     {
         Theatre theatre = new Theatre("Olympian", 8, 12);
 
-        theatre.getSeats();
+        theatre.printAvailable();
+
+        theatre.reserveSeat("H11");
+        theatre.reserveSeat("Z24");
+
+        theatre.printReserved();
+
+        theatre.cancelSeat("H11");
+        theatre.cancelSeat("A01");
+
+        theatre.printReserved();
+
+
     }
 }
